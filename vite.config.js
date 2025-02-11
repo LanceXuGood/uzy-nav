@@ -8,9 +8,6 @@ import { Plugin as importToCDN } from "vite-plugin-cdn-import";
 
 // https://vite.dev/config/
 export default defineConfig({
-  build: {
-    outDir: "youzy-nav-dist",
-  },
   plugins: [
     vue(),
     vueJsx(),

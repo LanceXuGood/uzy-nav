@@ -1,10 +1,10 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import BusinessView from "../views/BusinessView.vue";
 import ManagementView from "../views/ManagementView.vue";
 import ServiceView from '../views/ServiceView.vue'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: [
     {
       path: "/",

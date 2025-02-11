@@ -1,0 +1,236 @@
+{
+  "categories": [
+    {
+      "id": "1",
+      "name": "优志愿",
+      "icon": "https://staticv3.youzy.cn/toc.h5/images/favicon.png",
+      "type": "c",
+      "items": [
+        {
+          "name": "Console-控制台",
+          "tags": ["nodejs"],
+          "urls": {
+            "prod": "https://console-toc.youzy.cn",
+            "test": "https://qa-cc.youzy.cn/login"
+          }
+        },
+        {
+          "name": "Console-控制台v2",
+          "tags": ["vue"],
+          "urls": {
+            "prod": "https://console-tocv2.youzy.cn",
+            "test": "http://qa-ccv.youzy.cn/"
+          }
+        },
+        {
+          "name": "CPC-优志愿",
+          "tags": ["nodejs"],
+          "urls": {
+            "prod": "https://www.youzy.cn",
+            "test": "http://qa-cpc.youzy.cn"
+          }
+        },
+        {
+          "name": "CH5-优志愿",
+          "tags": ["vue", "h5"],
+          "urls": {
+            "prod": "https://m.youzy.cn",
+            "test": "http://qa-cMv.youzy.cn"
+          }
+        },
+        {
+          "name": "CHA-活动",
+          "tags": ["vue", "h5"],
+          "urls": {
+            "prod": "https://m.youzy.cn",
+            "test": "http://qa-cM.youzy.cn"
+          }
+        }
+      ]
+    },
+    {
+      "name": "优家",
+      "id": "2",
+      "type": "b",
+      "icon": "https://nav.youzy.cn/prod_cover/youj/icon.png",
+      "items": [
+        {
+          "name": "Console-控制台",
+          "tags": ["vue"],
+          "urls": {
+            "prod": "https://console-tob.youzy.cn/",
+            "test": "http://qa-bc.youzy.cn/login"
+          }
+        },
+        {
+          "name": "BSA-后台",
+          "tags": ["vue"],
+          "urls": {
+            "prod": "https://b.youzy.cn/",
+            "test": "http://qa-bsa.youzy.cn/"
+          }
+        },
+        {
+          "name": "BPC-前台",
+          "tags": ["nuxt"],
+          "urls": {
+            "prod": "https://c.youzy.cn/",
+            "test": "http://qa-bpcv.youzy.cn/"
+          }
+        },
+        {
+          "name": "BH5-前台",
+          "tags": ["vue", "h5"],
+          "urls": {
+            "prod": "https://cm.youzy.cn/",
+            "test": "http://qa-bh5v.youzy.cn/"
+          }
+        }
+      ]
+    },
+    {
+      "name": "高招云",
+      "icon": "https://nav.youzy.cn/prod_cover/youz/icon.png",
+      "id": "3",
+      "type": "Z",
+      "items": [
+        {
+          "name": "Console-高招云控制台",
+          "tags": ["vue"],
+          "urls": {
+            "prod": "https://console-uz.youzy.cn",
+            "test": "http://qa-console-uz.youzy.cn/"
+          }
+        },
+        {
+          "name": "ZSA-高招云高校后台",
+          "tags": ["vue"],
+          "urls": {
+            "prod": "https://sa.edudata.cn/",
+            "test": "http://qa-uzsa.youzy.cn"
+          }
+        },
+        {
+          "name": "ZH5-高招云(手机版)",
+          "tags": ["vue", "h5"],
+          "urls": {
+            "prod": "https://m.edudata.cn",
+            "test": "http://qa-m.edudata.cn"
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "优生涯",
+      "id": "4",
+      "type": "G",
+      "icon": "https://nav.youzy.cn/prod_cover/usy_uyk/icon.png",
+      "items": [
+        {
+          "name": "Console-优生涯控制台",
+          "tags": ["vue"],
+          "urls": {
+            "prod": "https://console.youshengya.cn",
+            "test": "http://qa-console.youshengya.cn"
+          }
+        },
+        {
+          "name": "GSA-优生涯高校后台",
+          "tags": ["vue"],
+          "urls": {
+            "prod": "https://admin.youshengya.cn",
+            "test": "http://qa-admin.youshengya.cn"
+          }
+        },
+        {
+          "name": "GPC-高招云",
+          "tags": ["nuxt"],
+          "urls": {
+            "prod": "https://youzy.youshengya.cn/homepage",
+            "test": "http://qa-usypc.youzy.cn/homepage"
+          }
+        }
+      ]
+    },
+    {
+      "name": "同济",
+      "icon": "https://img4.youzy.cn/media/files/20220614/843ca7bc.jfif",
+      "id": "5",
+      "type": "T",
+      "items": [
+        {
+          "name": "TSA-招办管理后台（VPN）",
+          "tags": ["vue"],
+          "urls": {
+            "prod": "https://bkzs-admin.tongji.edu.cn/",
+            "test": "https://qa-uz-sa.youzy.cn/"
+          }
+        },
+        {
+          "name": "TPC-招办前台",
+          "tags": ["nuxt"],
+          "urls": {
+            "prod": "https://bkzs.tongji.edu.cn/",
+            "test": "http://qa-tongji-pc.youzy.cn/"
+          }
+        },
+        {
+          "name": "TH5-招办前台",
+          "tags": ["nuxt"],
+          "urls": {
+            "prod": "https://bkzs-M.tongji.edu.cn/",
+            "test": "http://qa-tongji-M.youzy.cn/"
+          }
+        }
+      ]
+    },
+    {
+      "name": "易度",
+      "id": "6",
+      "type": "Y",
+      "icon": "https://m.eduranking.cn/icon.png",
+      "items": [
+        {
+          "name": "YPC-易度",
+          "tags": ["nuxt"],
+          "urls": {
+            "prod": "https://www.eduranking.cn/",
+            "test": "https://qa-pc.eduranking.cn/"
+          }
+        },
+        {
+          "name": "YH5-易度",
+          "tags": ["nuxt"],
+          "urls": {
+            "prod": "https://m.eduranking.cn/",
+            "test": "http://qa-m.eduranking.cn/"
+          }
+        }
+      ]
+    },
+    {
+      "name": "杂七杂八",
+      "id": "7",
+      "icon": "ri-archive-drawer-line",
+      "items": [
+        {
+          "name": "HPC-优优升学",
+          "tags": ["nuxt"],
+          "urls": {
+            "prod": "http://you.gaokaow.cc/",
+            "test": ""
+          }
+        },
+        {
+          "name": "HPC-优家品牌官网",
+          "tags": ["nodejs"],
+          "urls": {
+            "prod": "https://www.youj.cc/",
+            "test": "https://qa-uj.youzy.cn/"
+          }
+        }
+      ]
+    }
+  ]
+}

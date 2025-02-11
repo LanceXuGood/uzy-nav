@@ -1,0 +1,91 @@
+{
+  "categories": [
+    {
+      "id": "101",
+      "name": "数据平台",
+      "type": "D",
+      "icon": "ri-database-2-fill",
+      "items": [
+        {
+          "name": "DAQ 数据采集",
+          "icon": "https://nav.youzy.cn/prod_cover/data/8.png",
+          "tags": ["vue"],
+          "urls": {
+            "prod": "https://console-daq.youzy.cn/",
+            "test": "http://qa-daq.youzy.cn/"
+          }
+        },
+        {
+          "name": "DMS 数据管理",
+          "icon": "https://nav.youzy.cn/prod_cover/data/7.png",
+          "tags": ["vue"],
+          "urls": {
+            "prod": "https://console-dms.youzy.cn",
+            "test": "http://qa-dms.youzy.cn/"
+          }
+        },
+        {
+          "name": "STATS 数据统计",
+          "icon": "https://nav.youzy.cn/prod_cover/data/9.png",
+          "tags": ["vue"],
+          "urls": {
+            "prod": "https://console-stats.youzy.cn/",
+            "test": "http://qa-stats.youzy.cn/"
+          }
+        }
+      ]
+    },
+    {
+      "id": "102",
+      "name": "内容创作",
+      "type": "C",
+      "icon": "ri-quill-pen-fill",
+      "items": [
+        {
+          "name": "CMS 内容管理",
+          "icon": "https://nav.youzy.cn/prod_cover/data/14.png",
+          "tags": ["vue"],
+          "urls": {
+            "prod": "https://console-cms.youzy.cn/",
+            "test": "http://qa-cms.youzy.cn/"
+          }
+        },
+        {
+          "name": "OP 创作者内容",
+          "icon": "https://nav.youzy.cn/prod_cover/data/10.png",
+          "tags": ["vue"],
+          "urls": {
+            "prod": "https://console-op.youzy.cn/",
+            "test": "http://qa-op.youzy.cn/"
+          }
+        },
+        {
+          "name": "UBK 优百科",
+          "icon": "https://nav.youzy.cn/prod_cover/data/11.png",
+          "tags": ["nuxt"],
+          "urls": {
+            "prod": "https://ubaike.youzy.cn",
+            "test": "https://qa-ubaike.youzy.cn"
+          }
+        }
+      ]
+    },
+    {
+      "id": "103",
+      "name": "财务",
+      "type": "F",
+      "icon": "ri-money-dollar-circle-fill",
+      "items": [
+        {
+          "name": "FMS 财务管理",
+          "icon": "https://nav.youzy.cn/prod_cover/data/6.png",
+          "tags": ["vue"],
+          "urls": {
+            "prod": "https://console-fms.youzy.cn",
+            "test": "http://qa-fms.youzy.cn/login"
+          }
+        }
+      ]
+    }
+  ]
+}

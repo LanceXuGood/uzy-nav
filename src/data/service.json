@@ -1,0 +1,77 @@
+{
+  "categories": [
+    {
+      "id": "301",
+      "name": "监控",
+      "type": "F",
+      "icon": "ri-eye-fill",
+      "items": [
+        {
+          "name": "Flamingo 网关安全",
+          "urls": {
+            "prod": "https://console-flamingo.youzy.cn/",
+            "test": ""
+          }
+        },
+        {
+          "name": "HORUS 监控平台",
+          "urls": {
+            "prod": "https://console-horus.youzy.cn",
+            "test": ""
+          }
+        },
+        {
+          "name": "SCOUT 监测数据",
+          "urls": {
+            "prod": "https://console-scout.youzy.cn/",
+            "test": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "302",
+      "name": "鹰仔",
+      "type": "E",
+      "icon": "ri-coreos-line",
+      "items": [
+        {
+          "name": "EAGLE 监控平台",
+          "urls": {
+            "prod": "https://uc.youzy.cn/",
+            "test": ""
+          }
+        },
+        {
+          "name": "EAGLE 基础设施",
+          "urls": {
+            "prod": "https://console-eagle.youzy.cn/",
+            "test": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "303",
+      "name": "权限",
+      "type": "P",
+      "icon": "ri-admin-fill",
+      "items": [
+        {
+          "name": "LION 权限管理",
+          "urls": {
+            "prod": "https://console-uc.youzy.cn/",
+            "test": ""
+          }
+        },
+        {
+          "name": "BMP 小程序发布",
+          "urls": {
+            "prod": "https://console-bmp-publish.youzy.cn/",
+            "test": ""
+          }
+        }
+      ]
+    }
+  ]
+}

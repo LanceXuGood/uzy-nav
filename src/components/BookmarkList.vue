@@ -283,7 +283,7 @@ const saveBookmarkOrder = () => {
   }
 
   .bookmark-category {
-    background: #fafafa;
+    background: #f5f5f5;
     border-radius: 15px;
     padding: 1rem;
     margin-bottom: 2rem;

@@ -13,8 +13,8 @@ const props = defineProps({
   },
   isDarkMode: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 const bookmarks = ref(props.bookmarksData);
@@ -236,14 +236,16 @@ const saveBookmarkOrder = () => {
                     class="env-link prod"
                     target="_blank"
                     :title="item.urls.prod"
-                  >prod</a>
+                    >prod</a
+                  >
                   <a
                     v-if="item.urls.test"
                     :href="item.urls.test"
                     class="env-link test"
                     target="_blank"
                     :title="item.urls.test"
-                  >test</a>
+                    >test</a
+                  >
                 </div>
               </div>
             </div>
@@ -300,7 +302,7 @@ const saveBookmarkOrder = () => {
     }
 
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
@@ -308,12 +310,13 @@ const saveBookmarkOrder = () => {
       bottom: 0;
       border-radius: 15px;
       padding: 2px;
-      background: linear-gradient(45deg,
-        rgba(33, 150, 243, 0.6),  // 淡蓝色
-        rgba(255, 77, 77, 0.6)    // 淡红色
+      background: linear-gradient(
+        45deg,
+        rgba(33, 150, 243, 0.6),
+        // 淡蓝色
+        rgba(255, 77, 77, 0.6) // 淡红色
       );
-      -webkit-mask: 
-        linear-gradient(#fff 0 0) content-box, 
+      -webkit-mask: linear-gradient(#fff 0 0) content-box,
         linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
@@ -326,7 +329,6 @@ const saveBookmarkOrder = () => {
     &:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-      cursor: grab;
 
       &::before {
         opacity: 1;
@@ -334,7 +336,6 @@ const saveBookmarkOrder = () => {
     }
 
     &:active {
-      cursor: grabbing;
     }
 
     .category-header {
@@ -351,20 +352,20 @@ const saveBookmarkOrder = () => {
       transition: all 0.3s ease;
 
       &::after {
-        content: '⋮⋮';  // 添加拖动图标
+        content: "⋮⋮"; // 添加拖动图标
         position: absolute;
         right: 1rem;
         color: #999;
-        cursor: grab;
+
         opacity: 0;
         transition: opacity 0.3s ease;
       }
 
       &:hover {
-        background: rgba(255, 255, 255, 0.8);  // hover 时略微加深背景
+        background: rgba(255, 255, 255, 0.8); // hover 时略微加深背景
 
         &::after {
-          opacity: 1;  // hover 时显示拖动图标
+          opacity: 1; // hover 时显示拖动图标
         }
       }
 
@@ -387,7 +388,7 @@ const saveBookmarkOrder = () => {
 
         .drag-handle {
           margin-left: auto;
-          cursor: grab;
+
           color: #1890ff;
           font-size: 16px;
           user-select: none;
@@ -403,7 +404,6 @@ const saveBookmarkOrder = () => {
           }
 
           &:active {
-            cursor: grabbing;
           }
         }
 
@@ -420,7 +420,7 @@ const saveBookmarkOrder = () => {
             width: 20px;
             height: 20px;
             object-fit: contain;
-            color: #FF9800;
+            color: #ff9800;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -540,7 +540,7 @@ const saveBookmarkOrder = () => {
                   }
 
                   &.icon-iphone {
-                    color: #2196F3;
+                    color: #2196f3;
                   }
                 }
 
@@ -581,9 +581,9 @@ const saveBookmarkOrder = () => {
                 z-index: 1000;
                 margin-bottom: 5px;
               }
-              
+
               &:hover::before {
-                content: '';
+                content: "";
                 position: absolute;
                 bottom: 100%;
                 left: 50%;
@@ -635,7 +635,7 @@ const saveBookmarkOrder = () => {
 
     .category-header {
       background: rgba(0, 0, 0, 0.3);
-      
+
       .title-wrapper {
         h2 {
           color: #ffffff;
@@ -679,7 +679,7 @@ const saveBookmarkOrder = () => {
           .environment-links {
             .env-link {
               background: #404040;
-              
+
               &.prod {
                 border-color: #4caf50;
                 color: #4caf50;
@@ -702,7 +702,7 @@ const saveBookmarkOrder = () => {
                 background: rgba(255, 255, 255, 0.9);
                 color: #333;
               }
-              
+
               &:hover::before {
                 border-top-color: rgba(255, 255, 255, 0.9);
               }

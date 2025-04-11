@@ -18,7 +18,7 @@
           "name": "Console-控制台v2",
           "tags": ["vue"],
           "urls": {
-            "prod": "https://console-tocv2.youzy.cn",
+            "prod": "https://console-tocv.youzy.cn",
             "test": "http://qa-ccv.youzy.cn/"
           }
         },

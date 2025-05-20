@@ -33,7 +33,9 @@ onMounted(() => {
     <!-- 侧边导航栏 -->
     <div class="sidebar">
       <div class="logo">
-        <img src="https://cdn.akamai.steamstatic.com/steam/apps/1364780/header.jpg" alt="Street Fighter 6" class="sf-logo">
+        <div class="pixilart-logo">
+          <span class="pixel-heart">❤</span> YOUZY
+        </div>
       </div>
       
       <div class="nav-menu">
@@ -43,7 +45,7 @@ onMounted(() => {
             class="tab-btn"
             :class="{ active: route.path === '/business' }"
           >
-            <i class="ri-building-2-line"></i>
+            <i class="pixel-icon business-icon">B</i>
             业务
           </router-link>
           <router-link
@@ -51,7 +53,7 @@ onMounted(() => {
             class="tab-btn"
             :class="{ active: route.path === '/management' }"
           >
-            <i class="ri-database-2-line"></i>
+            <i class="pixel-icon management-icon">M</i>
             管理
           </router-link>
           <router-link
@@ -59,7 +61,7 @@ onMounted(() => {
             class="tab-btn"
             :class="{ active: route.path === '/service' }"
           >
-            <i class="ri-terminal-box-line"></i>
+            <i class="pixel-icon service-icon">S</i>
             服务
           </router-link>
         </div>
@@ -73,6 +75,14 @@ onMounted(() => {
     </div>
     
     <div class="main-content">
+      <div class="top-header">
+        <div class="header-links">
+         
+        </div>
+        <button class="start-drawing-btn">
+          <span class="btn-icon">✏️</span> START DRAWING
+        </button>
+      </div>
       <router-view></router-view>
     </div>
   </div>
@@ -82,11 +92,13 @@ onMounted(() => {
 .app-container {
   display: flex;
   min-height: 100vh;
+  font-family: 'Nunito', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background-color: #f5f5f5;
 }
 
 .sidebar {
-  width: 240px;
-  background: #fff;
+  width: 220px;
+  background-color: white;
   border-right: 1px solid #eee;
   display: flex;
   flex-direction: column;
@@ -94,17 +106,28 @@ onMounted(() => {
   left: 0;
   top: 0;
   bottom: 0;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   z-index: 100;
   
   .logo {
     padding: 15px;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     
-    .sf-logo {
-      width: 100%;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    .pixilart-logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: #333;
+      display: flex;
+      align-items: center;
+      
+      .pixel-heart {
+        color: #FF5252;
+        font-size: 20px;
+        margin-right: 5px;
+      }
     }
   }
   
@@ -118,21 +141,18 @@ onMounted(() => {
     padding: 16px;
     display: flex;
     justify-content: center;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid #eee;
 
     .theme-btn {
-      padding: 8px;
-      font-size: 16px;
-      background: #f5f5f5;
-      color: #333;
+      background: transparent;
       border: none;
-      border-radius: 50%;
+      font-size: 18px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      padding: 8px;
+      border-radius: 50%;
 
       &:hover {
-        transform: scale(1.1);
-        background: #e0e0e0;
+        background-color: #f5f5f5;
       }
     }
   }
@@ -140,64 +160,174 @@ onMounted(() => {
 
 .main-content {
   flex: 1;
-  padding: 2rem;
-  background: #f9f9f9;
-  margin-left: 240px;
+  padding: 0;
+  background: #f8f9fa;
+  margin-left: 220px;
+  
+  .top-header {
+    margin-bottom: 10px;
+    height: 63px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    
+    .header-links {
+      display: flex;
+      gap: 20px;
+      
+      .header-link {
+        text-decoration: none;
+        color: #444;
+        font-size: 13px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        
+        .header-icon {
+          font-size: 15px;
+        }
+        
+        &:hover {
+          color: #FF5252;
+        }
+      }
+    }
+    
+    .start-drawing-btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      
+      &:hover {
+        background-color: #45a049;
+      }
+    }
+  }
+  
+  .secondary-nav {
+    height: 40px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+    margin-top: 1px;
+    
+    .sec-nav-item {
+      text-decoration: none;
+      color: #555;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 0 15px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      position: relative;
+      
+      &:hover {
+        color: #FF5252;
+      }
+      
+      &.active {
+        color: #FF5252;
+        
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 15px;
+          right: 15px;
+          height: 3px;
+          background-color: #FF5252;
+        }
+      }
+    }
+  }
 }
 
 .tab-nav {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  padding: 10px 15px;
 
   .tab-btn {
-    padding: 12px 20px;
+    padding: 12px 10px;
     text-decoration: none;
-    font-size: 14px;
-    color: #666;
-    border-radius: 0;
+    font-size: 16px;
+    color: #555;
+    border-radius: 4px;
     display: flex;
     align-items: center;
-    gap: 12px;
-    transition: all 0.3s ease;
-    position: relative;
+    gap: 10px;
+    transition: background-color 0.2s;
 
-    i {
-      font-size: 18px;
+    .pixel-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-style: normal;
+      border-radius: 4px;
+      background-color: #f5f5f5;
     }
 
     &:hover {
-      color: #1890ff;
-      background: rgba(24, 144, 255, 0.1);
+      background-color: #f5f5f5;
     }
 
     &.active {
-      color: #1890ff;
-      background: rgba(24, 144, 255, 0.15);
-      border-right: 3px solid #1890ff;
+      background-color: #f0f0f0;
+      font-weight: 600;
+      color: #FF5252;
+      
+      .pixel-icon {
+        background-color: #ffeeee;
+        color: #FF5252;
+      }
     }
   }
 }
 
 // 暗黑模式
 .dark-mode {
+  background-color: #1a1a1a;
+  
   .sidebar {
-    background: #1a1a1a;
+    background-color: #252525;
     border-right-color: #333;
     
     .logo {
       border-bottom-color: #333;
+      
+      .pixilart-logo {
+        color: #eee;
+      }
     }
     
     .theme-toggle {
       border-top-color: #333;
       
       .theme-btn {
-        background: #333;
         color: #eee;
         
         &:hover {
-          background: #444;
+          background-color: #333;
         }
       }
     }
@@ -205,20 +335,53 @@ onMounted(() => {
 
   .main-content {
     background: #1a1a1a;
+    
+    .top-header {
+      background-color: #252525;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      
+      .header-links {
+        .header-link {
+          color: #ccc;
+          
+          &:hover {
+            color: #FF5252;
+          }
+        }
+      }
+    }
+    
+    .secondary-nav {
+      background-color: #252525;
+      border-color: #333;
+      
+      .sec-nav-item {
+        color: #ccc;
+      }
+    }
   }
 
   .tab-nav {
     .tab-btn {
-      color: #bbb;
+      color: #ccc;
+
+      .pixel-icon {
+        background-color: #333;
+        color: #ddd;
+      }
 
       &:hover {
-        color: #1890ff;
-        background: rgba(24, 144, 255, 0.2);
+        background-color: #333;
       }
 
       &.active {
-        color: #1890ff;
-        background: rgba(24, 144, 255, 0.25);
+        background-color: #333;
+        color: #FF5252;
+        
+        .pixel-icon {
+          background-color: #442222;
+          color: #FF5252;
+        }
       }
     }
   }

@@ -207,39 +207,40 @@ const setActiveCategory = (category) => {
     <div class="bookmark-container">
       <div v-for="category in filteredBookmarks" :key="category.name" class="bookmark-category">
         <h2 class="category-title">
-          <img
-            v-if="category.icon && category.icon.startsWith('http')"
-            :src="category.icon"
-            class="category-icon"
-          />
-          <i
-            v-else-if="category.icon"
-            :class="category.icon"
-            class="category-icon"
-          ></i>
           {{ category.name }}
         </h2>
         
         <div class="bookmark-items">
-          <a
+          <div
             v-for="item in category.items"
             :key="item.name"
-            :href="item.urls.prod"
-            class="bookmark-item"
-            target="_blank"
+            class="bookmark-item-wrapper"
           >
-            <div class="bookmark-content">
-              <div
-                class="name-avatar"
-                :style="{
-                  background: getAvatarGradient(item.name, category.type),
-                }"
-              >
-                {{ item.name.slice(0, 1).toUpperCase() }}
+            <a
+              :href="item.urls.prod"
+              class="bookmark-item"
+              target="_blank"
+            >
+              <div class="bookmark-content">
+                <div
+                  class="name-avatar"
+                  :style="{
+                    background: getAvatarGradient(item.name, category.type),
+                  }"
+                >
+                  {{ item.name.slice(0, 1).toUpperCase() }}
+                </div>
+                <div class="item-name">{{ item.name }}</div>
+                <div class="item-icon" v-if="item.name.toLowerCase().includes('h5')">
+                  <div class="pixel-phone"></div>
+                </div>
               </div>
-              <div class="item-name">{{ item.name }}</div>
+            </a>
+            <div class="env-links">
+              <a v-if="item.urls.test" :href="item.urls.test" target="_blank" class="test-env-link">测试环境</a>
+              <a :href="item.urls.prod" target="_blank" class="prod-env-link">正式环境</a>
             </div>
-          </a>
+          </div>
         </div>
       </div>
     </div>
@@ -248,35 +249,43 @@ const setActiveCategory = (category) => {
 
 <style lang="less" scoped>
 .bookmarks {
-  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Nunito', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   max-width: 1600px;
   margin: 0 auto;
   padding: 0 20px;
+  background-color: #f8f9fa;
   
   .category-tabs {
+    padding-top: 20px;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 3px solid #e4e7ec;
     
     .category-tab {
-      padding: 6px 12px;
-      border-radius: 16px;
+      padding: 8px 32px;
+      border-radius: 20px;
       font-size: 14px;
-      color: #666;
-      background-color: #f5f5f5;
+      font-weight: 600;
+      color: #555;
+      background-color: white;
       cursor: pointer;
       transition: all 0.2s ease;
+      border: 2px solid #e4e7ec;
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
       
       &:hover {
-        background-color: #e0e0e0;
+        background-color: #f0f2f5;
+        transform: translateY(-2px);
       }
       
       &.active {
-        background-color: #1890ff;
+        background-color: #6C5CE7;
         color: white;
+        border-color: #5B4BC4;
+        box-shadow: 0 3px 0 #4A3DB1;
       }
     }
   }
@@ -284,80 +293,167 @@ const setActiveCategory = (category) => {
   .bookmark-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 30px;
     width: 100%;
   }
 
   .bookmark-category {
-    margin-bottom: 20px;
-    
     .category-title {
-      margin: 0 0 16px 10px;
-      font-size: 16px;
-      font-weight: 500;
-      color: #666;
+      margin: 0 0 20px 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: #444;
       display: flex;
       align-items: center;
-      gap: 8px;
-      
-      .category-icon {
-        width: 18px;
-        height: 18px;
-        object-fit: contain;
-      }
     }
     
     .bookmark-items {
       display: flex;
       flex-wrap: wrap;
-      gap: 24px;
+      gap: 24px 24px;
       justify-content: flex-start;
+      margin-bottom: 40px;
       
-      .bookmark-item {
-        text-decoration: none;
-        height: 40px;
-        padding: 0 10px;
-        border-radius: 8px;
-        background-color: #ffffff;
-        display: flex;
-        align-items: center;
-        overflow: hidden;
-        transition: all 0.2s ease;
+      .bookmark-item-wrapper {
         width: 256px;
         max-width: 100%;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        border: 1px solid #f0f0f0;
+        position: relative;
         
         &:hover {
-          background-color: #ffffff;
-          transform: translateY(-2px);
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+          .env-links {
+            opacity: 1;
+            visibility: visible;
+            background-color: #ede7f6;
+          }
         }
-        
-        .bookmark-content {
+      
+        .bookmark-item {
+          text-decoration: none;
+          height: 50px;
+          padding: 0 15px;
+          border-radius: 10px;
+          background-color: #ffffff;
           display: flex;
           align-items: center;
-          gap: 10px;
           width: 100%;
+          border: 2px solid #e4e7ec;
+          box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
+          position: relative;
+          z-index: 2;
           
-          .name-avatar {
-            width: 24px;
-            height: 24px;
-            border-radius: 6px;
+          .bookmark-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            
+            .name-avatar {
+              width: 30px;
+              height: 30px;
+              border-radius: 6px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 16px;
+              color: #fff;
+              flex-shrink: 0;
+              border: 2px solid rgba(255, 255, 255, 0.5);
+            }
+            
+            .item-name {
+              font-size: 15px;
+              font-weight: 600;
+              color: #444;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              flex: 1;
+            }
+            
+            .item-icon {
+              display: flex;
+              align-items: center;
+              color: #6C5CE7;
+              margin-left: auto;
+              
+              .pixel-phone {
+                width: 16px;
+                height: 22px;
+                position: relative;
+                border: 2px solid #444;
+                border-radius: 2px;
+                background: linear-gradient(135deg, #6C5CE7 0%, #FF7675 100%);
+                
+                &:before {
+                  content: "";
+                  position: absolute;
+                  width: 6px;
+                  height: 2px;
+                  background-color: #fff;
+                  top: 3px;
+                  left: 50%;
+                  transform: translateX(-50%);
+                  border-radius: 1px;
+                }
+                
+                &:after {
+                  content: "";
+                  position: absolute;
+                  width: 4px;
+                  height: 4px;
+                  border: 1px solid #fff;
+                  bottom: 3px;
+                  left: 50%;
+                  transform: translateX(-50%);
+                  border-radius: 50%;
+                }
+              }
+            }
+          }
+        }
+        
+        .env-links {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          width: 100%;
+          height: 50px;
+          padding: 0 10px;
+          background-color: #ffffff;
+          border-radius: 10px;
+          position: absolute;
+          top: 45px;
+          left: 0;
+          z-index: 1;
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s ease, background-color 0.3s ease;
+          
+          .test-env-link, .prod-env-link {
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
-            color: #fff;
-            flex-shrink: 0;
+            transition: all 0.2s ease;
+            padding: 0 15px;
           }
           
-          .item-name {
-            font-size: 14px;
-            color: #333;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+          .test-env-link {
+            color: #FF5252;
+            
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+          
+          .prod-env-link {
+            color: #6C5CE7;
+            
+            &:hover {
+              text-decoration: underline;
+            }
           }
         }
       }
@@ -367,47 +463,92 @@ const setActiveCategory = (category) => {
 
 // 暗黑模式
 .dark-mode {
+  background-color: #202124;
+  .bookmarks{
+    background-color: #202124;
+  }
   .category-tabs {
-    border-bottom-color: #333;
+    border-bottom-color: #3D3D3D;
     
     .category-tab {
-      background-color: #333;
-      color: #aaa;
+      background-color: #2D2D30;
+      color: #BBB;
+      border-color: #3D3D3D;
       
       &:hover {
-        background-color: #444;
+        background-color: #3A3A3E;
       }
       
       &.active {
-        background-color: #1890ff;
+        background-color: #6C5CE7;
         color: white;
+        border-color: #5B4BC4;
       }
     }
   }
 
   .bookmark-category {
     .category-title {
-      color: #aaa;
+      color: #DDD;
     }
     
     .bookmark-items {
-      .bookmark-item {
-        background-color: #2a2a2a;
-        border-color: #333;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-        
+      .bookmark-item-wrapper {
         &:hover {
-          background-color: #2a2a2a;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+          .env-links {
+            opacity: 1;
+            visibility: visible;
+            background-color: #2d1b36;
+          }
         }
         
-        .bookmark-content {
-          .item-name {
-            color: #eee;
+        .bookmark-item {
+          background-color: #2D2D30;
+          border-color: #3D3D3D;
+          box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
+          
+          .bookmark-content {
+            .name-avatar {
+              border-color: rgba(255, 255, 255, 0.2);
+            }
+            
+            .item-name {
+              color: #DDD;
+            }
+            
+            .item-icon {
+              color: #A097EC;
+              
+              .pixel-phone {
+                border-color: #666;
+                background: linear-gradient(135deg, #A097EC 0%, #FF9797 100%);
+              }
+            }
+          }
+        }
+        
+        .env-links {
+          background-color: #2D2D30;
+          
+          .test-env-link {
+            color: #FF7675;
+            
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+          
+          .prod-env-link {
+            color: #A097EC;
+            
+            &:hover {
+              text-decoration: underline;
+            }
           }
         }
       }
     }
   }
+  
 }
 </style>

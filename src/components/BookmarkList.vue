@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
-import draggable from "vuedraggable";
 
 const props = defineProps({
   bookmarksData: {
@@ -20,6 +19,7 @@ const props = defineProps({
 const bookmarks = ref(props.bookmarksData);
 const favorites = ref([]);
 const searchQuery = ref("");
+const activeCategory = ref('所有'); // 添加激活分类状态
 
 // 从localStorage加载数据
 onMounted(() => {
@@ -77,12 +77,34 @@ const isMatch = (text, query) => {
   return text.toLowerCase().includes(query);
 };
 
+// 获取所有分类列表
+const categoryList = computed(() => {
+  const categories = ['所有'];
+  bookmarks.value.forEach(category => {
+    categories.push(category.name);
+  });
+  return categories;
+});
+
+// 根据激活分类过滤书签
+const filteredBookmarksByCategory = computed(() => {
+  if (activeCategory.value === '所有') {
+    return bookmarks.value;
+  } else {
+    return bookmarks.value.filter(category => 
+      category.name === activeCategory.value
+    );
+  }
+});
+
 // 搜索过滤
 const filteredBookmarks = computed(() => {
   const query = searchQuery.value.toLowerCase().trim();
-  if (!query) return bookmarks.value;
+  const categoryFiltered = filteredBookmarksByCategory.value;
+  
+  if (!query) return categoryFiltered;
 
-  return bookmarks.value
+  return categoryFiltered
     .map((category) => {
       if (isMatch(category.name, query)) {
         return category;
@@ -161,456 +183,181 @@ const getTagIcon = (tag) => {
   }
 };
 
-// 保存书签排序顺序
-const saveBookmarkOrder = () => {
-  localStorage.setItem(
-    `${props.storagePrefix}Order`,
-    JSON.stringify(bookmarks.value)
-  );
+// 切换分类
+const setActiveCategory = (category) => {
+  activeCategory.value = category;
 };
 </script>
 
 <template>
   <div class="bookmarks" :class="{ 'dark-mode': isDarkMode }">
-    <draggable
-      v-model="bookmarks"
-      item-key="name"
-      @end="saveBookmarkOrder"
-      :animation="200"
-      ghost-class="ghost-class"
-      handle=".category-header"
-      :delay="50"
-      :delayOnTouchOnly="true"
-    >
-      <template #item="{ element: category }">
-        <div class="bookmark-category">
-          <div class="category-header">
-            <div class="title-wrapper">
-              <h2>
-                <img
-                  v-if="category.icon && category.icon.startsWith('http')"
-                  :src="category.icon"
-                  class="category-icon"
-                />
-                <i
-                  v-else-if="category.icon"
-                  :class="category.icon"
-                  class="category-icon"
-                ></i>
-                {{ category.name }}
-              </h2>
-              <!-- <span class="drag-handle">⋮⋮</span> -->
-            </div>
-          </div>
-          <div class="bookmark-grid">
-            <div
-              v-for="item in category.items"
-              :key="item.name"
-              class="bookmark-item"
-            >
-              <div class="bookmark-icon">
-                <div
-                  class="name-avatar"
-                  :style="{
-                    background: getAvatarGradient(item.name, category.type),
-                  }"
-                >
-                  {{ item.name.slice(0, 3).toUpperCase() }}
-                </div>
-                <div class="name-wrapper">
-                  <span class="name">
-                    {{ item.name }}
-                  </span>
-                  <div
-                    class="tags-wrapper"
-                    v-if="item.tags && item.tags.length"
-                  >
-                    <span v-for="tag in item.tags" :key="tag" class="tag">
-                      <i v-if="getTagIcon(tag)" :class="getTagIcon(tag)"></i>
-                    </span>
-                  </div>
-                </div>
-                <div class="environment-links">
-                  <a
-                    :href="item.urls.prod"
-                    class="env-link prod"
-                    target="_blank"
-                    :title="item.urls.prod"
-                    >prod</a
-                  >
-                  <a
-                    v-if="item.urls.test"
-                    :href="item.urls.test"
-                    class="env-link test"
-                    target="_blank"
-                    :title="item.urls.test"
-                    >test</a
-                  >
-                </div>
+    <!-- 分类标签导航 -->
+    <div class="category-tabs">
+      <div 
+        v-for="category in categoryList" 
+        :key="category" 
+        class="category-tab" 
+        :class="{ active: activeCategory === category }"
+        @click="setActiveCategory(category)"
+      >
+        {{ category }}
+      </div>
+    </div>
+    
+    <div class="bookmark-container">
+      <div v-for="category in filteredBookmarks" :key="category.name" class="bookmark-category">
+        <h2 class="category-title">
+          <img
+            v-if="category.icon && category.icon.startsWith('http')"
+            :src="category.icon"
+            class="category-icon"
+          />
+          <i
+            v-else-if="category.icon"
+            :class="category.icon"
+            class="category-icon"
+          ></i>
+          {{ category.name }}
+        </h2>
+        
+        <div class="bookmark-items">
+          <a
+            v-for="item in category.items"
+            :key="item.name"
+            :href="item.urls.prod"
+            class="bookmark-item"
+            target="_blank"
+          >
+            <div class="bookmark-content">
+              <div
+                class="name-avatar"
+                :style="{
+                  background: getAvatarGradient(item.name, category.type),
+                }"
+              >
+                {{ item.name.slice(0, 1).toUpperCase() }}
               </div>
+              <div class="item-name">{{ item.name }}</div>
             </div>
-          </div>
+          </a>
         </div>
-      </template>
-    </draggable>
+      </div>
+    </div>
   </div>
 </template>
 
 <style lang="less" scoped>
 .bookmarks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  > div {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 20px;
+  
+  .category-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    
+    .category-tab {
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 14px;
+      color: #666;
+      background-color: #f5f5f5;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background-color: #e0e0e0;
+      }
+      
+      &.active {
+        background-color: #1890ff;
+        color: white;
+      }
+    }
+  }
+  
+  .bookmark-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     width: 100%;
   }
 
-  .search-container {
-    margin-bottom: 2rem;
-
-    .search-input {
-      width: 100%;
-      padding: 0.8rem 1rem;
-      border: 1px solid #eee;
-      border-radius: 8px;
-      font-size: 1rem;
-      outline: none;
-      transition: all 0.3s ease;
-
-      &:focus {
-        border-color: #4caf50;
-        box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
-      }
-    }
-  }
-
   .bookmark-category {
-    background: #f5f5f5;
-    border-radius: 15px;
-    padding: 1rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    display: inline-block;
-    width: calc(33.333% - 1rem);
-    margin-right: 1rem;
-    vertical-align: top;
-    transition: all 0.3s ease;
-    position: relative;
-
-    &:nth-child(3n) {
-      margin-right: 0;
-    }
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      border-radius: 15px;
-      padding: 2px;
-      background: linear-gradient(
-        45deg,
-        rgba(33, 150, 243, 0.6),
-        // 淡蓝色
-        rgba(255, 77, 77, 0.6) // 淡红色
-      );
-      -webkit-mask: linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-
-      &::before {
-        opacity: 1;
-      }
-    }
-
-    &:active {
-    }
-
-    .category-header {
+    margin-bottom: 20px;
+    
+    .category-title {
+      margin: 0 0 16px 10px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #666;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 1rem;
-      padding: 0.8rem 1rem;
-      position: relative;
-      z-index: 2;
-      background: rgba(255, 255, 255, 0.6);
-      border-radius: 10px;
-      backdrop-filter: blur(8px);
-      transition: all 0.3s ease;
-
-      &::after {
-        content: "⋮⋮"; // 添加拖动图标
-        position: absolute;
-        right: 1rem;
-        color: #999;
-
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.8); // hover 时略微加深背景
-
-        &::after {
-          opacity: 1; // hover 时显示拖动图标
-        }
-      }
-
-      // 暗黑模式适配
-      .dark-mode & {
-        &:hover {
-          background: rgba(0, 0, 0, 0.4);
-        }
-
-        &::after {
-          color: #666;
-        }
-      }
-
-      .title-wrapper {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        width: 100%;
-
-        .drag-handle {
-          margin-left: auto;
-
-          color: #1890ff;
-          font-size: 16px;
-          user-select: none;
-          padding: 0 4px;
-
-          &.disabled {
-            cursor: not-allowed;
-            opacity: 0.5;
-          }
-
-          &:hover:not(.disabled) {
-            color: #40a9ff;
-          }
-
-          &:active {
-          }
-        }
-
-        h2 {
-          margin: 0;
-          font-size: 1.2rem;
-          color: #1a1a1a;
-          font-weight: 600;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-
-          .category-icon {
-            width: 20px;
-            height: 20px;
-            object-fit: contain;
-            color: #ff9800;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-        }
+      gap: 8px;
+      
+      .category-icon {
+        width: 18px;
+        height: 18px;
+        object-fit: contain;
       }
     }
-
-    .bookmark-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.8rem;
-      min-height: 240px;
-
+    
+    .bookmark-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: flex-start;
+      
       .bookmark-item {
-        position: relative;
-        background: #ffffff;
-        border-radius: 12px;
-        height: auto;
-        padding: 0.8rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-        transition: all 0.3s ease;
-        border: 2px solid transparent;
-        width: 100%;
-        min-height: 110px;
+        text-decoration: none;
+        height: 40px;
+        padding: 0 10px;
+        border-radius: 8px;
+        background-color: #ffffff;
         display: flex;
         align-items: center;
-        justify-content: center;
-
+        overflow: hidden;
+        transition: all 0.2s ease;
+        width: 256px;
+        max-width: 100%;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        border: 1px solid #f0f0f0;
+        
         &:hover {
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-          transform: translateY(-1px);
+          background-color: #ffffff;
+          transform: translateY(-2px);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
         }
-
-        &:empty {
-          background: rgba(0, 0, 0, 0.02);
-          border: 1px dashed #ddd;
-        }
-
-        .bookmark-icon {
+        
+        .bookmark-content {
           display: flex;
-          flex-direction: column;
           align-items: center;
-          text-align: center;
-          font-size: 40px;
-          margin-right: 8px;
-          color: #1890ff;
-
-          img,
+          gap: 10px;
+          width: 100%;
+          
           .name-avatar {
-            width: 42px;
-            height: 42px;
-            margin-bottom: 8px;
+            width: 24px;
+            height: 24px;
             border-radius: 6px;
-          }
-
-          .name-avatar {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
-            font-weight: 500;
+            font-size: 14px;
             color: #fff;
-            text-transform: uppercase;
+            flex-shrink: 0;
           }
-
-          .name-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            margin-bottom: 8px;
-            width: 100%;
-
-            .name {
-              font-size: 0.9rem;
-              text-align: center;
-              color: #333;
-              font-weight: 600;
-              font-family: -apple-system, "PingFang SC", "Microsoft YaHei",
-                sans-serif;
-            }
-
-            .tags-wrapper {
-              display: flex;
-              gap: 4px;
-              flex-wrap: wrap;
-              justify-content: center;
-
-              .tag {
-                font-size: 0.75rem;
-                padding: 2px 8px;
-                background-color: #fff;
-                border-radius: 4px;
-                color: #666;
-                border: 1px solid #e8e8e8;
-                line-height: 1.2;
-                display: flex;
-                align-items: center;
-                gap: 4px;
-
-                i {
-                  font-size: 14px;
-                  transition: all 0.3s ease;
-
-                  &.icon-vuejs {
-                    color: #42b883;
-                  }
-
-                  &.icon-Nodejs {
-                    color: #539e43;
-                  }
-
-                  &.icon-nuxt {
-                    font-size: 16px;
-                    color: #539e43;
-                  }
-
-                  &.icon-iphone {
-                    color: #2196f3;
-                  }
-                }
-
-                &:hover i {
-                  transform: scale(1.1);
-                }
-              }
-            }
-          }
-
-          .environment-links {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-
-            .env-link {
-              padding: 2px 8px;
-              border-radius: 3px;
-              font-size: 0.75rem;
-              text-decoration: none;
-              color: #666;
-              background: #fff;
-              transition: all 0.2s ease;
-              position: relative;
-
-              &:hover::after {
-                content: attr(title);
-                position: absolute;
-                bottom: 100%;
-                left: 50%;
-                transform: translateX(-50%);
-                padding: 4px 8px;
-                background: rgba(0, 0, 0, 0.8);
-                color: white;
-                border-radius: 4px;
-                font-size: 12px;
-                white-space: nowrap;
-                z-index: 1000;
-                margin-bottom: 5px;
-              }
-
-              &:hover::before {
-                content: "";
-                position: absolute;
-                bottom: 100%;
-                left: 50%;
-                transform: translateX(-50%);
-                border: 5px solid transparent;
-                border-top-color: rgba(0, 0, 0, 0.8);
-                margin-bottom: -5px;
-              }
-
-              &.prod {
-                border: 1px solid #4caf50;
-                color: #4caf50;
-                &:hover {
-                  background: #4caf50;
-                  color: #fff;
-                }
-              }
-
-              &.test {
-                border: 1px solid #ff9800;
-                color: #ff9800;
-                &:hover {
-                  background: #ff9800;
-                  color: #fff;
-                }
-              }
-            }
+          
+          .item-name {
+            font-size: 14px;
+            color: #333;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
         }
       }
@@ -618,95 +365,45 @@ const saveBookmarkOrder = () => {
   }
 }
 
-.ghost-class {
-  opacity: 0.5;
-  background: #f0f0f0;
-}
-
-.sortable-drag {
-  background: #fff;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
-
+// 暗黑模式
 .dark-mode {
-  .bookmark-category {
-    background: #2a2a2a;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-
-    .category-header {
-      background: rgba(0, 0, 0, 0.3);
-
-      .title-wrapper {
-        h2 {
-          color: #ffffff;
-        }
-
-        .drag-handle {
-          color: #ffffff;
-        }
+  .category-tabs {
+    border-bottom-color: #333;
+    
+    .category-tab {
+      background-color: #333;
+      color: #aaa;
+      
+      &:hover {
+        background-color: #444;
+      }
+      
+      &.active {
+        background-color: #1890ff;
+        color: white;
       }
     }
+  }
 
-    .bookmark-grid {
+  .bookmark-category {
+    .category-title {
+      color: #aaa;
+    }
+    
+    .bookmark-items {
       .bookmark-item {
-        background: #333333;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
+        background-color: #2a2a2a;
+        border-color: #333;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        
         &:hover {
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+          background-color: #2a2a2a;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
-
-        &:empty {
-          background: rgba(255, 255, 255, 0.05);
-          border-color: #444;
-        }
-
-        .bookmark-icon {
-          .name-wrapper {
-            .name {
-              color: #ffffff;
-            }
-
-            .tags-wrapper {
-              .tag {
-                background-color: #404040;
-                border-color: #555;
-                color: #ccc;
-              }
-            }
-          }
-
-          .environment-links {
-            .env-link {
-              background: #404040;
-
-              &.prod {
-                border-color: #4caf50;
-                color: #4caf50;
-                &:hover {
-                  background: #4caf50;
-                  color: #fff;
-                }
-              }
-
-              &.test {
-                border-color: #ff9800;
-                color: #ff9800;
-                &:hover {
-                  background: #ff9800;
-                  color: #fff;
-                }
-              }
-
-              &:hover::after {
-                background: rgba(255, 255, 255, 0.9);
-                color: #333;
-              }
-
-              &:hover::before {
-                border-top-color: rgba(255, 255, 255, 0.9);
-              }
-            }
+        
+        .bookmark-content {
+          .item-name {
+            color: #eee;
           }
         }
       }

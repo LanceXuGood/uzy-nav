@@ -30,13 +30,13 @@ onMounted(() => {
     class="app-container"
     :class="{ 'drawer-open': isDrawerOpen, 'dark-mode': isDarkMode }"
   >
-    <div class="main-content">
-      <header class="header">
-        <div class="theme-toggle">
-          <button @click="toggleTheme" class="theme-btn">
-            {{ isDarkMode ? "☀️" : "🌙" }}
-          </button>
-        </div>
+    <!-- 侧边导航栏 -->
+    <div class="sidebar">
+      <div class="logo">
+        <img src="https://cdn.akamai.steamstatic.com/steam/apps/1364780/header.jpg" alt="Street Fighter 6" class="sf-logo">
+      </div>
+      
+      <div class="nav-menu">
         <div class="tab-nav">
           <router-link
             to="/business"
@@ -58,11 +58,21 @@ onMounted(() => {
             to="/service"
             class="tab-btn"
             :class="{ active: route.path === '/service' }"
-            ><i class="ri-terminal-box-line"></i>
+          >
+            <i class="ri-terminal-box-line"></i>
             服务
           </router-link>
         </div>
-      </header>
+      </div>
+      
+      <div class="theme-toggle">
+        <button @click="toggleTheme" class="theme-btn">
+          {{ isDarkMode ? "☀️" : "🌙" }}
+        </button>
+      </div>
+    </div>
+    
+    <div class="main-content">
       <router-view></router-view>
     </div>
   </div>
@@ -74,154 +84,143 @@ onMounted(() => {
   min-height: 100vh;
 }
 
-.drawer {
-  width: 250px;
+.sidebar {
+  width: 240px;
   background: #fff;
   border-right: 1px solid #eee;
-  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  z-index: 100;
+  
+  .logo {
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    
+    .sf-logo {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+  }
+  
+  .nav-menu {
+    flex: 1;
+    padding: 20px 0;
+    overflow-y: auto;
+  }
+  
+  .theme-toggle {
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid #f0f0f0;
+
+    .theme-btn {
+      padding: 8px;
+      font-size: 16px;
+      background: #f5f5f5;
+      color: #333;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: scale(1.1);
+        background: #e0e0e0;
+      }
+    }
+  }
 }
 
 .main-content {
   flex: 1;
   padding: 2rem;
-  background: #f5f5f5;
+  background: #f9f9f9;
+  margin-left: 240px;
 }
 
-.header {
-  margin-bottom: 3rem;
-  text-align: center;
+.tab-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 
-  .tab-nav {
-    margin-bottom: 2rem;
+  .tab-btn {
+    padding: 12px 20px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #666;
+    border-radius: 0;
     display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-
-    .tab-btn {
-      padding: 0.8rem 2.5rem;
-      text-decoration: none;
-      font-size: 1.1rem;
-      color: #666;
-      border-radius: 8px;
-      position: relative;
-      overflow: hidden;
-      background: transparent;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-
-      &::before {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        width: 0;
-        height: 2px;
-        background: #4caf50;
-        transform: translateX(-50%);
-        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      i {
-        font-size: 1.2rem;
-        transition: transform 0.3s ease;
-      }
-
-      &:hover {
-        color: red;
-        background: rgba(255, 0, 0, 0.05);
-
-        &::before {
-          background: red;
-        }
-
-        i {
-          transform: scale(1.1);
-        }
-      }
-
-      &.active {
-        color: red;
-        background: rgba(255, 0, 0, 0.1);
-        font-weight: 500;
-
-        &::before {
-          background: red;
-        }
-
-        i {
-          transform: scale(1.1);
-        }
-      }
-    }
-  }
-}
-
-.theme-toggle {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-
-  .theme-btn {
-    padding: 0.5rem;
-    font-size: 1.2rem;
-    background: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    gap: 12px;
     transition: all 0.3s ease;
+    position: relative;
+
+    i {
+      font-size: 18px;
+    }
 
     &:hover {
-      transform: scale(1.1);
+      color: #1890ff;
+      background: rgba(24, 144, 255, 0.1);
+    }
+
+    &.active {
+      color: #1890ff;
+      background: rgba(24, 144, 255, 0.15);
+      border-right: 3px solid #1890ff;
     }
   }
 }
 
+// 暗黑模式
 .dark-mode {
+  .sidebar {
+    background: #1a1a1a;
+    border-right-color: #333;
+    
+    .logo {
+      border-bottom-color: #333;
+    }
+    
+    .theme-toggle {
+      border-top-color: #333;
+      
+      .theme-btn {
+        background: #333;
+        color: #eee;
+        
+        &:hover {
+          background: #444;
+        }
+      }
+    }
+  }
+
   .main-content {
     background: #1a1a1a;
   }
 
-  .header .tab-nav {
-    background: rgba(255, 255, 255, 0.1);
-
+  .tab-nav {
     .tab-btn {
-      color: #ccc;
-
-      &::before {
-        background: #6ddb71;
-      }
+      color: #bbb;
 
       &:hover {
-        color: white;
-        background: rgba(255, 255, 255, 0.15);
-
-        &::before {
-          background: white;
-        }
+        color: #1890ff;
+        background: rgba(24, 144, 255, 0.2);
       }
 
       &.active {
-        color: white;
-        background: rgba(255, 255, 255, 0.2);
-
-        &::before {
-          background: white;
-        }
+        color: #1890ff;
+        background: rgba(24, 144, 255, 0.25);
       }
     }
-  }
-
-  .theme-btn {
-    background: rgba(255, 255, 255, 0.8);
-    color: #000;
   }
 }
 </style>

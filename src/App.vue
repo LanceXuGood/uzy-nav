@@ -124,7 +124,7 @@ onMounted(() => {
       align-items: center;
       
       .pixel-heart {
-        color: #FF5252;
+        color: #6C5CE7;
         font-size: 20px;
         margin-right: 5px;
       }
@@ -288,17 +288,17 @@ onMounted(() => {
     }
 
     &:hover {
-      background-color: #f5f5f5;
+      background-color: #f0f2f5;
     }
 
     &.active {
-      background-color: #f0f0f0;
+      background-color: #ede7f6;
       font-weight: 600;
-      color: #FF5252;
+      color: #6C5CE7;
       
       .pixel-icon {
-        background-color: #ffeeee;
-        color: #FF5252;
+        background-color: #6C5CE7;
+        color: white;
       }
     }
   }
@@ -375,12 +375,12 @@ onMounted(() => {
       }
 
       &.active {
-        background-color: #333;
-        color: #FF5252;
+        background-color: #2d1b36;
+        color: #A097EC;
         
         .pixel-icon {
-          background-color: #442222;
-          color: #FF5252;
+          background-color: #6C5CE7;
+          color: white;
         }
       }
     }

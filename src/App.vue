@@ -192,13 +192,13 @@ onMounted(() => {
         }
         
         &:hover {
-          color: #FF5252;
+          color: #6C5CE7;
         }
       }
     }
     
     .start-drawing-btn {
-      background-color: #4CAF50;
+      background-color: #6C5CE7;
       color: white;
       border: none;
       border-radius: 20px;
@@ -211,7 +211,7 @@ onMounted(() => {
       gap: 5px;
       
       &:hover {
-        background-color: #45a049;
+        background-color: #5B4BC4;
       }
     }
   }
@@ -238,11 +238,11 @@ onMounted(() => {
       position: relative;
       
       &:hover {
-        color: #FF5252;
+        color: #6C5CE7;
       }
       
       &.active {
-        color: #FF5252;
+        color: #6C5CE7;
         
         &:after {
           content: '';
@@ -251,7 +251,7 @@ onMounted(() => {
           left: 15px;
           right: 15px;
           height: 3px;
-          background-color: #FF5252;
+          background-color: #6C5CE7;
         }
       }
     }
@@ -345,7 +345,7 @@ onMounted(() => {
           color: #ccc;
           
           &:hover {
-            color: #FF5252;
+            color: #A097EC;
           }
         }
       }
@@ -357,6 +357,18 @@ onMounted(() => {
       
       .sec-nav-item {
         color: #ccc;
+        
+        &:hover {
+          color: #A097EC;
+        }
+        
+        &.active {
+          color: #A097EC;
+          
+          &:after {
+            background-color: #A097EC;
+          }
+        }
       }
     }
   }

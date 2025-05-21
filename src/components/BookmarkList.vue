@@ -367,7 +367,7 @@ const getCategoryObj = (category) => {
 
   .bookmark-category {
     .category-title {
-      margin: 0 0 20px 0;
+      margin: 0 0 4px 0;
       font-size: 18px;
       font-weight: 700;
       color: #444;

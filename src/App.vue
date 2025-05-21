@@ -53,7 +53,7 @@ onMounted(() => {
             class="tab-btn"
             :class="{ active: route.path === '/management' }"
           >
-            <div class="circle-icon atk-icon">ATK</div>
+            <div class="circle-icon mp-icon">MP</div>
             管理
           </router-link>
           <router-link
@@ -293,12 +293,16 @@ onMounted(() => {
       background-color: #E53935;
     }
     
-    .atk-icon {
-      background-color: #FF9800;
+    .mp-icon {
+      background-color: #2196F3;
     }
     
     .def-icon {
       background-color: #FDD835;
+    }
+    
+    .atk-icon {
+      background-color: #FF9800;
     }
     
     .spa-icon {

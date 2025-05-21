@@ -5,6 +5,10 @@
       "name": "数据平台",
       "type": "D",
       "icon": "ri-database-2-fill",
+      "pokemon": {
+        "static": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/143.png",
+        "animated": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/143.gif"
+      },
       "items": [
         {
           "name": "DAQ 数据采集",
@@ -40,6 +44,10 @@
       "name": "内容创作",
       "type": "C",
       "icon": "ri-quill-pen-fill",
+      "pokemon": {
+        "static": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/185.png",
+        "animated": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/185.gif"
+      },
       "items": [
         {
           "name": "CMS 内容管理",
@@ -75,6 +83,10 @@
       "name": "财务",
       "type": "F",
       "icon": "ri-money-dollar-circle-fill",
+      "pokemon": {
+        "static": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/52.png",
+        "animated": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/52.gif"
+      },
       "items": [
         {
           "name": "FMS 财务管理",

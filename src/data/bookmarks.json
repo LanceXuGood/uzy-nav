@@ -5,6 +5,10 @@
       "name": "优志愿",
       "icon": "https://staticv3.youzy.cn/toc.h5/images/favicon.png",
       "type": "c",
+      "pokemon": {
+        "static": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png",
+        "animated": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/6.gif"
+      },
       "items": [
         {
           "name": "Console-控制台",
@@ -53,6 +57,10 @@
       "id": "2",
       "type": "b",
       "icon": "https://nav.youzy.cn/prod_cover/youj/icon.png",
+      "pokemon": {
+        "static": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png",
+        "animated": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/9.gif"
+      },
       "items": [
         {
           "name": "Console-控制台",
@@ -93,6 +101,10 @@
       "icon": "https://nav.youzy.cn/prod_cover/youz/icon.png",
       "id": "3",
       "type": "Z",
+      "pokemon": {
+        "static": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/36.png",
+        "animated": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/36.gif"
+      },
       "items": [
         {
           "name": "Console-高招云控制台",
@@ -126,6 +138,10 @@
       "id": "4",
       "type": "G",
       "icon": "https://nav.youzy.cn/prod_cover/usy_uyk/icon.png",
+      "pokemon": {
+        "static": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/203.png",
+        "animated": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/203.gif"
+      },
       "items": [
         {
           "name": "Console-优生涯控制台",
@@ -158,6 +174,10 @@
       "icon": "https://img4.youzy.cn/media/files/20220614/843ca7bc.jfif",
       "id": "5",
       "type": "T",
+      "pokemon": {
+        "static": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/44.png",
+        "animated": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/1.gif"
+      },
       "items": [
         {
           "name": "TSA-招办管理后台（VPN）",
@@ -190,6 +210,10 @@
       "id": "6",
       "type": "Y",
       "icon": "https://m.eduranking.cn/icon.png",
+      "pokemon": {
+        "static": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/105.png",
+        "animated": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/105.gif"
+      },
       "items": [
         {
           "name": "YPC-易度",
@@ -213,6 +237,10 @@
       "name": "杂七杂八",
       "id": "7",
       "icon": "ri-archive-drawer-line",
+      "pokemon": {
+        "static": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/44.png",
+        "animated": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/44.gif"
+      },
       "items": [
         {
           "name": "HPC-优优升学",

@@ -207,6 +207,12 @@ const setActiveCategory = (category) => {
     <div class="bookmark-container">
       <div v-for="category in filteredBookmarks" :key="category.name" class="bookmark-category">
         <h2 class="category-title">
+          <div class="category-icon">
+            <img v-if="category.pokemon" class="static-img" :src="category.pokemon.static" :alt="category.name" />
+            <img v-else class="static-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png" alt="Pokemon" />
+            <img v-if="category.pokemon" class="animated-img" :src="category.pokemon.animated" :alt="category.name + ' animated'" />
+            <img v-else class="animated-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/6.gif" alt="Animated Pokemon" />
+          </div>
           {{ category.name }}
         </h2>
         
@@ -305,6 +311,48 @@ const setActiveCategory = (category) => {
       color: #444;
       display: flex;
       align-items: center;
+      
+      .category-icon {
+        position: relative;
+        width: 60px;
+        height: 60px;
+        margin-right: 12px;
+        transform: translateY(-1px);
+        
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          position: absolute;
+          top: 0;
+          left: 0;
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .static-img {
+          opacity: 1;
+        }
+        
+        .animated-img {
+          opacity: 0;
+        }
+      }
+    }
+    
+    &:hover {
+      .category-title {
+        .category-icon {
+          transform: translateY(-3px);
+          transition: transform 0.4s ease;
+          .static-img {
+            opacity: 0;
+          }
+          .animated-img {
+            opacity: 1;
+            transform: scale(1.0);
+          }
+        }
+      }
     }
     
     .bookmark-items {
@@ -490,6 +538,14 @@ const setActiveCategory = (category) => {
   .bookmark-category {
     .category-title {
       color: #DDD;
+      
+      .category-icon {
+        filter: brightness(0.9) contrast(1.1);
+        
+        img {
+          filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.3));
+        }
+      }
     }
     
     .bookmark-items {

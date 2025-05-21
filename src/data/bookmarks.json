@@ -175,7 +175,7 @@
       "id": "5",
       "type": "T",
       "pokemon": {
-        "static": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/44.png",
+        "static": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
         "animated": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/1.gif"
       },
       "items": [

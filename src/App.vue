@@ -45,7 +45,7 @@ onMounted(() => {
             class="tab-btn"
             :class="{ active: route.path === '/business' }"
           >
-            <i class="pixel-icon business-icon">B</i>
+            <div class="circle-icon hp-icon">HP</div>
             业务
           </router-link>
           <router-link
@@ -53,7 +53,7 @@ onMounted(() => {
             class="tab-btn"
             :class="{ active: route.path === '/management' }"
           >
-            <i class="pixel-icon management-icon">M</i>
+            <div class="circle-icon atk-icon">ATK</div>
             管理
           </router-link>
           <router-link
@@ -61,7 +61,7 @@ onMounted(() => {
             class="tab-btn"
             :class="{ active: route.path === '/service' }"
           >
-            <i class="pixel-icon service-icon">S</i>
+            <div class="circle-icon def-icon">DEF</div>
             服务
           </router-link>
         </div>
@@ -275,16 +275,42 @@ onMounted(() => {
     gap: 10px;
     transition: background-color 0.2s;
 
-    .pixel-icon {
-      width: 24px;
-      height: 24px;
+    .circle-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 12px;
+      font-weight: bold;
       font-style: normal;
-      border-radius: 4px;
-      background-color: #f5f5f5;
+      color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .hp-icon {
+      background-color: #E53935;
+    }
+    
+    .atk-icon {
+      background-color: #FF9800;
+    }
+    
+    .def-icon {
+      background-color: #FDD835;
+    }
+    
+    .spa-icon {
+      background-color: #4FC3F7;
+    }
+    
+    .spd-icon {
+      background-color: #8BC34A;
+    }
+    
+    .spdef-icon {
+      background-color: #F48FB1;
     }
 
     &:hover {
@@ -296,9 +322,8 @@ onMounted(() => {
       font-weight: 600;
       color: #6C5CE7;
       
-      .pixel-icon {
-        background-color: #6C5CE7;
-        color: white;
+      .circle-icon {
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
       }
     }
   }
@@ -377,9 +402,9 @@ onMounted(() => {
     .tab-btn {
       color: #ccc;
 
-      .pixel-icon {
-        background-color: #333;
-        color: #ddd;
+      .circle-icon {
+        filter: brightness(0.9) contrast(1.1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
       }
 
       &:hover {
@@ -390,9 +415,8 @@ onMounted(() => {
         background-color: #2d1b36;
         color: #A097EC;
         
-        .pixel-icon {
-          background-color: #6C5CE7;
-          color: white;
+        .circle-icon {
+          box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
         }
       }
     }

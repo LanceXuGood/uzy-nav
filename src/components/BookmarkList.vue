@@ -187,6 +187,19 @@ const getTagIcon = (tag) => {
 const setActiveCategory = (category) => {
   activeCategory.value = category;
 };
+
+const getCategoryObj = (category) => {
+  if (category === '所有') {
+    return {
+      name: '所有',
+      pokemon: {
+        static: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/493.png",
+        animated: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/493.gif"
+      }
+    };
+  }
+  return bookmarks.value.find(b => b.name === category);
+};
 </script>
 
 <template>
@@ -200,6 +213,20 @@ const setActiveCategory = (category) => {
         :class="{ active: activeCategory === category }"
         @click="setActiveCategory(category)"
       >
+        <div class="pokemon-container">
+          <img 
+            v-if="getCategoryObj(category)?.pokemon?.static" 
+            class="static-img" 
+            :src="getCategoryObj(category)?.pokemon?.static" 
+            :alt="category" 
+          />
+          <img 
+            v-if="getCategoryObj(category)?.pokemon?.animated" 
+            class="animated-img" 
+            :src="getCategoryObj(category)?.pokemon?.animated" 
+            :alt="category + ' animated'" 
+          />
+        </div>
         {{ category }}
       </div>
     </div>
@@ -207,12 +234,6 @@ const setActiveCategory = (category) => {
     <div class="bookmark-container">
       <div v-for="category in filteredBookmarks" :key="category.name" class="bookmark-category">
         <h2 class="category-title">
-          <div class="category-icon">
-            <img v-if="category.pokemon" class="static-img" :src="category.pokemon.static" :alt="category.name" />
-            <img v-else class="static-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png" alt="Pokemon" />
-            <img v-if="category.pokemon" class="animated-img" :src="category.pokemon.animated" :alt="category.name + ' animated'" />
-            <img v-else class="animated-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/6.gif" alt="Animated Pokemon" />
-          </div>
           {{ category.name }}
         </h2>
         
@@ -278,9 +299,37 @@ const setActiveCategory = (category) => {
       color: #555;
       background-color: white;
       cursor: pointer;
+      border: 2px solid transparent;
       transition: all 0.2s ease;
-      border: 2px solid #e4e7ec;
-      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      
+      .pokemon-container {
+        position: relative;
+        width: 32px;
+        height: 32px;
+        margin-right: 10px;
+        
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          position: absolute;
+          top: 0;
+          left: 0;
+          transition: all 0.3s ease;
+        }
+        
+        .static-img {
+          opacity: 1;
+          transform: scale(1);
+        }
+        
+        .animated-img {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+      }
       
       &:hover {
         background-color: #f0f2f5;
@@ -288,10 +337,23 @@ const setActiveCategory = (category) => {
       }
       
       &.active {
-        background-color: #6C5CE7;
-        color: white;
-        border-color: #5B4BC4;
-        box-shadow: 0 3px 0 #4A3DB1;
+        background-color: white;
+        color: #6C5CE7;
+        border: 2px solid #6C5CE7;
+        
+        .pokemon-container {
+          transform: translateY(-1px);
+          
+          .static-img {
+            opacity: 0;
+            transform: scale(1.1);
+          }
+          
+          .animated-img {
+            opacity: 1;
+            transform: scale(1.05);
+          }
+        }
       }
     }
   }
@@ -311,48 +373,10 @@ const setActiveCategory = (category) => {
       color: #444;
       display: flex;
       align-items: center;
-      
-      .category-icon {
-        position: relative;
-        width: 60px;
-        height: 60px;
-        margin-right: 12px;
-        transform: translateY(-1px);
-        
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-          position: absolute;
-          top: 0;
-          left: 0;
-          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .static-img {
-          opacity: 1;
-        }
-        
-        .animated-img {
-          opacity: 0;
-        }
-      }
     }
     
     &:hover {
-      .category-title {
-        .category-icon {
-          transform: translateY(-3px);
-          transition: transform 0.4s ease;
-          .static-img {
-            opacity: 0;
-          }
-          .animated-img {
-            opacity: 1;
-            transform: scale(1.0);
-          }
-        }
-      }
+      // 移除悬停效果
     }
     
     .bookmark-items {
@@ -371,7 +395,6 @@ const setActiveCategory = (category) => {
           .env-links {
             opacity: 1;
             visibility: visible;
-            background-color: #ede7f6;
           }
         }
       
@@ -384,10 +407,9 @@ const setActiveCategory = (category) => {
           display: flex;
           align-items: center;
           width: 100%;
-          border: 2px solid #e4e7ec;
-          box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
           position: relative;
           z-index: 2;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
           
           .bookmark-content {
             display: flex;
@@ -465,10 +487,11 @@ const setActiveCategory = (category) => {
           justify-content: space-around;
           align-items: center;
           width: 100%;
-          height: 50px;
+          height: 40px;
           padding: 0 10px;
-          background-color: #ffffff;
-          border-radius: 10px;
+          background-color: #333333;
+          border-bottom-left-radius: 10px;
+          border-bottom-right-radius: 10px;
           position: absolute;
           top: 45px;
           left: 0;
@@ -497,7 +520,7 @@ const setActiveCategory = (category) => {
           }
           
           .prod-env-link {
-            color: #6C5CE7;
+            color: #3498db;
             
             &:hover {
               text-decoration: underline;
@@ -523,14 +546,35 @@ const setActiveCategory = (category) => {
       color: #BBB;
       border-color: #3D3D3D;
       
+      .pokemon-container {
+        img {
+          filter: brightness(0.9) contrast(1.1);
+        }
+      }
+      
       &:hover {
         background-color: #3A3A3E;
       }
       
       &.active {
-        background-color: #6C5CE7;
-        color: white;
-        border-color: #5B4BC4;
+        background-color: #2D2D30;
+        color: #A097EC;
+        border: 2px solid #A097EC;
+        
+        .pokemon-container {
+          transform: translateY(-1px);
+          
+          .static-img {
+            opacity: 0;
+            transform: scale(1.1);
+          }
+          
+          .animated-img {
+            opacity: 1;
+            transform: scale(1.05);
+            filter: brightness(1.1) contrast(1.2) drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
+          }
+        }
       }
     }
   }
@@ -538,14 +582,6 @@ const setActiveCategory = (category) => {
   .bookmark-category {
     .category-title {
       color: #DDD;
-      
-      .category-icon {
-        filter: brightness(0.9) contrast(1.1);
-        
-        img {
-          filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.3));
-        }
-      }
     }
     
     .bookmark-items {
@@ -554,14 +590,13 @@ const setActiveCategory = (category) => {
           .env-links {
             opacity: 1;
             visibility: visible;
-            background-color: #2d1b36;
           }
         }
         
         .bookmark-item {
           background-color: #2D2D30;
           border-color: #3D3D3D;
-          box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
           
           .bookmark-content {
             .name-avatar {
@@ -584,7 +619,7 @@ const setActiveCategory = (category) => {
         }
         
         .env-links {
-          background-color: #2D2D30;
+          background-color: #222222;
           
           .test-env-link {
             color: #FF7675;
@@ -606,5 +641,8 @@ const setActiveCategory = (category) => {
     }
   }
   
+  .bookmark-items .bookmark-item-wrapper:hover .env-links {
+    background-color: #2D2D30;
+  }
 }
 </style>
